@@ -54,3 +54,24 @@ def maxProduct(arr, n):
 
 arr = [2, 3, 4, 5, -1, 0]
 print(maxProduct(arr, len(arr)))
+
+
+
+# Method 3
+def maxProduct(arr, n):
+    mn = arr[0]
+    mx = arr[0]
+    maxProd = arr[0]
+
+    for i in range(1, n):
+        if arr[i] < 0:
+            mx, mn = mn, mx
+          
+        mx = max(arr[i], mx * arr[i])
+        mn = min(arr[i], mn * arr[i])
+        maxProd = max(maxProd, mx)
+
+    return maxProd
+
+arr = [2, 3, 4, 5, -1, 0]
+print(maxProduct(arr, len(arr)))
