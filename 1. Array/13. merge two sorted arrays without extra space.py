@@ -13,7 +13,7 @@ b = [2,3,9]
 print(solve(a,b))
 
 
-
+# extend 1st array with 2nd array and compare from the end
 def merge(arr1, arr2, m, n): 
     i = m-1
     j = n-1
@@ -42,33 +42,29 @@ def merge(arr1, arr2, m, n):
 
 
 
-def nextGap(gap):
-    if gap <= 1:
-        return 0
-    return gap//2 + gap%2
-    
-def merge(arr1, arr2, n, m): 
-    gap = m + n
-    gap = nextGap(gap)
-    while gap > 0:
-        i = 0
-        while i + gap < n:
-            if arr1[i] > arr1[i+gap]:
-                arr1[i], arr1[i+gap] = arr1[i+gap], arr1[i]
-            i += 1
-        
-        j = gap - n if gap > m else 0
-        while i < n and j < m:
-            if arr1[i] > arr2[j]:
-                arr1[i], arr2[j] = arr2[j], arr1[i]
-            i += 1
-            j += 1
-        
-        if j < m:
-            j = 0
-            while j + gap < m:
-                if arr2[j] > arr2[j+gap]:
-                    arr2[j], arr2[j+gap] = arr2[j+gap], arr2[j]
-                j += 1
-        gap = nextGap(gap)
+# Method: All elements in Arr 1 must be smaller than all elements in Arr2
+# Algorithm
+# 1. Take two pointers -> i = m-1 and j = 0
+# 2. if a[i] > b[j] -> swap(a[i], b[j]) and i -= 1, j += 1
+# 3. if not, that means all elements in a is smaller than all elements in b. 
+#    So break the loop
+# 4. Now arrays might be unsorted so sort them
 
+def merge(a, b, m, n): 
+    i = m-1
+    j = 0
+    while i >= 0 and j < n:
+        if a[i] >= b[j]:
+            a[i], b[j] = b[j], a[i]
+            i -= 1
+            j += 1
+        else:
+            break
+    a.sort()
+    b.sort()
+    return a, b
+
+
+a = [5, 8, 10, 12, 13, 15]
+b = [2,6,7,9,11]
+print(merge(a, b, len(a), len(b)))
